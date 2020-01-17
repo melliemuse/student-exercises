@@ -5,7 +5,14 @@
 # The collection of instructors in the cohort.
 
 class Cohort:
-    def __init__(self):
-        name = ""
-        students = list()
-        instructors = list()
+    def __init__(self, name):
+        self.name = name
+        self.students = list()
+        self.instructors = list()
+    def assign_instructor(self, new_instructor):
+        self.instructors.append(new_instructor) 
+    def assign_student(self, new_student):
+        self.students.append(new_student) 
+    def list_instructors(self): 
+        for instructor in self.instructors:
+            print(instructor.firstName)
