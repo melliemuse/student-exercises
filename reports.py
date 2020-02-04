@@ -1,15 +1,6 @@
 import sqlite3
-
-class Student():
-
-    def __init__(self, first, last, handle, cohort):
-        self.first_name = first
-        self.last_name = last
-        self.slack_handle = handle
-        self.cohort = cohort
-
-    def __repr__(self):
-        return f'{self.first_name} {self.last_name} is in cohort {self.cohort}'
+from student import Student
+from cohort import Cohort 
 
 # student = Student('Bart', 'Simpson', '@bart', 'Cohort 8')
 # print(f'{student.first_name} {student.last_name} is in {student.cohort}')
@@ -17,8 +8,6 @@ class Student():
 class StudentExerciseReports():
 
     """Methods for reports on the Student Exercises database"""
-    # def create_student(self, cursor, row):
-    #     return Student(row[1], row[2], row[3], row[5])
 
     def __init__(self):
         self.db_path = "/Users/nss4/workspace/python/exercises/tracking-student-exercises/studentexercises.db"
@@ -52,7 +41,25 @@ class StudentExerciseReports():
             #     print(student)
 
             [print(s) for s in all_students]
+
+    def all_cohorts(self):
+        with sqlite3.connect(self.db_path) as conn:
+            conn.row_factory = lambda cursor, row: Cohort(
+                row[1]
+            )
+            db_cursor = conn.cursor()
+
+            db_cursor.execute("""
+            SELECT Id, Name
+            FROM Cohort
+            """)
+
+            all_cohorts = db_cursor.fetchall()
+
+            [print(c) for c in all_cohorts]
+
             
 
 reports = StudentExerciseReports()
 reports.all_students()
+reports.all_cohorts()

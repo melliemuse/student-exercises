@@ -9,6 +9,8 @@ class Cohort:
         self.name = name
         self.students = list()
         self.instructors = list()
+    def __repr__(self):
+        return f'{self.name}'
     def assign_instructor(self, new_instructor):
         self.instructors.append(new_instructor) 
     def assign_student(self, new_student):
