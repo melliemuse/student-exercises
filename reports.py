@@ -163,7 +163,7 @@ class StudentExerciseReports():
     # List the exercises assigned to each student. Display each student name and the exercises s/he has been assigned beneath their name. Use a dictionary to track each student. Remember that the key should be the student id and the value should be the entire student object.
 
     def all_student_exercises(self):
-        exercises = dict()
+        students = dict()
         with sqlite3.connect(self.db_path) as conn:
             db_cursor = conn.cursor()
         db_cursor.execute("""
@@ -187,12 +187,12 @@ class StudentExerciseReports():
             student_id = row[2]
             student_name = f'{row[3]} {row[4]}'
 
-            if exercise_name not in exercises:
-                exercises[exercise_name] = [student_name]
+            if student_name not in students:
+                students[student_name] = [exercise_name]
             else: 
-                exercises[exercise_name].append(student_name)
+                students[student_name].append(exercise_name)
 
-        print(exercises)
+        print(students)
 
 reports = StudentExerciseReports()
 reports.all_students()
