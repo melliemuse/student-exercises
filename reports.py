@@ -1,6 +1,7 @@
 import sqlite3
 from student import Student
 from cohort import Cohort 
+from exercise import Exercise
 
 # student = Student('Bart', 'Simpson', '@bart', 'Cohort 8')
 # print(f'{student.first_name} {student.last_name} is in {student.cohort}')
@@ -58,8 +59,47 @@ class StudentExerciseReports():
 
             [print(c) for c in all_cohorts]
 
-            
+    def all_exercises(self):
+        with sqlite3.connect(self.db_path) as conn:
+            conn.row_factory = lambda cursor, row: Exercise(
+                row[1], row[2]
+            )
+            db_cursor = conn.cursor()
+
+            db_cursor.execute("""
+            SELECT 
+            Id, 
+            Name, 
+            Language
+            FROM Exercise
+            """)
+
+            all_exercises = db_cursor.fetchall()
+
+            [print(e) for e in all_exercises]
+
+    def all_js_exercises(self):
+        with sqlite3.connect(self.db_path) as conn:
+            conn.row_factory = lambda cursor, row: Exercise(
+                row[1], row[2]
+            )
+            db_cursor = conn.cursor()
+
+            db_cursor.execute("""
+            SELECT 
+            Id, 
+            Name,
+            Language
+            FROM Exercise 
+            WHERE Language = "JavaScript"
+            """)
+
+            all_js_exercises = db_cursor.fetchall()
+
+            [print(js) for js in all_js_exercises]
 
 reports = StudentExerciseReports()
 reports.all_students()
 reports.all_cohorts()
+# reports.all_exercises()
+reports.all_js_exercises()
