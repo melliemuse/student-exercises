@@ -192,7 +192,11 @@ class StudentExerciseReports():
             else: 
                 students[student_name].append(exercise_name)
 
-        print(students)
+        for student_name, exercises in students.items():
+            print(student_name)
+            for exercise in exercises:
+                print(f'\t* {exercise}')
+
 
 reports = StudentExerciseReports()
 reports.all_students()
