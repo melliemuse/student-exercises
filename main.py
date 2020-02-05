@@ -13,14 +13,14 @@ exercise4 = Exercise("Goal Getter", "Python")
 
 cohort35 = Cohort("Cohort 35")
 cohort36 = Cohort("Cohort 36")
-cohort37 = Cohort("Cohort 37")
+cohort37 = Cohort("Cohort 37") 
 
 # Create 4, or more, students and assign them to one of the cohorts.
 
-samSam = Student("Sam", "Pita", "SamTheSlice", "Cohort 36")
-guyGuy = Student("Guy", "Cherkesky", "WhatA", "Cohort 36")
-erEr = Student("Erin", "Polley", "ErIn", "Cohort 36")
-treyTrey = Student("Trey", "Suitor", "HesASuitor", "Cohort 36")
+samSam = Student("Sam", "Pita", "SamTheSlice")
+guyGuy = Student("Guy", "Cherkesky", "WhatA")
+erEr = Student("Erin", "Polley", "ErIn")
+treyTrey = Student("Trey", "Suitor", "HesASuitor")
 
 # Create 3, or more, instructors and assign them to one of the cohorts.
 
@@ -31,7 +31,7 @@ andy = Instructor("Andy", "Smith", "andEE", "scuba diving")
 steve = Instructor("Steve", "Jenkins", "@steve", "poetry")   
 
 cohort36.assign_instructor(jisie)
-cohort36.assign_instructor(andy)
+cohort36.assign_instructor(andy) 
 cohort35.assign_instructor(joe)
 cohort36.assign_instructor(jenna) 
 cohort37.assign_instructor(steve)
@@ -52,3 +52,6 @@ andy.assign_exercise(treyTrey, exercise2, exercise3)
 andy.assign_exercise(samSam, exercise2, exercise4)
 steve.assign_exercise(treyTrey, exercise2, exercise3)
 steve.assign_exercise(samSam, exercise2, exercise4)
+
+print(samSam.exercises[0].name)
+
