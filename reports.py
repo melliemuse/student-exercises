@@ -15,7 +15,7 @@ class StudentExerciseReports():
         self.db_path = "/Users/nss4/workspace/python/exercises/tracking-student-exercises/studentexercises.db"
 
     def all_students(self):
-
+        
         """Retrieve all students with the cohort name"""
 
         with sqlite3.connect(self.db_path) as conn:
@@ -160,6 +160,44 @@ class StudentExerciseReports():
         all_instructors = db_cursor.fetchall()
         [print(inst) for inst in all_instructors]
 
+    # List the exercises assigned to each student. Display each student name and the exercises s/he has been assigned beneath their name. Use a dictionary to track each student. Remember that the key should be the student id and the value should be the entire student object.
+
+    def all_student_exercises(self):
+        students = dict()
+        with sqlite3.connect(self.db_path) as conn:
+            db_cursor = conn.cursor()
+        db_cursor.execute("""
+        SELECT e.Id ExerciseId,
+        e.Name,
+        s.Id,
+        s.FirstName,
+        s.LastName 
+        FROM Exercise e
+        JOIN StudentExercises se 
+        ON se.ExerciseId = e.Id
+        JOIN Student s 
+        ON se.StudentId = s.Id
+        """)
+
+        data = db_cursor.fetchall()
+
+        for row in data:
+            exercise_id = row[0]
+            exercise_name = row[1]
+            student_id = row[2]
+            student_name = f'{row[3]} {row[4]}'
+
+            if student_name not in students:
+                students[student_name] = [exercise_name]
+            else: 
+                students[student_name].append(exercise_name)
+
+        for student_name, exercises in students.items():
+            print(student_name)
+            for exercise in exercises:
+                print(f'\t* {exercise}')
+
+
 reports = StudentExerciseReports()
 reports.all_students()
 reports.all_cohorts()
@@ -168,3 +206,4 @@ reports.all_cohorts()
 reports.all_python_exercises()
 reports.all_html_exercises()
 reports.all_instructors()
+reports.all_student_exercises()
